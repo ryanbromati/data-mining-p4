@@ -1,91 +1,104 @@
-# Avaliação N3 – Análise de Séries Temporais, Mineração de Texto e Web Scraping
+# 📊 Análise de Séries Temporais, Mineração de Texto e Web Scraping
 
-## Objetivo
-
-Verificar o entendimento sobre modelos ARIMA e SARIMA em séries temporais, técnicas de mineração de texto e aplicação de Web Scraping. A avaliação foi dividida em três partes:
+Trabalho prático integrando análise de séries temporais (ARIMA e SARIMA), mineração de texto (NLP) e web scraping de notícias.
 
 ---
 
-## 1) ARIMA e SARIMA com Dados do Banco Central (3,0 pts)
+## ✅ Questão 1 – ARIMA e SARIMA
 
-**Dataset utilizado:**  
-[Balança Comercial - Saldo Mensal](https://dadosabertos.bcb.gov.br)
+### Objetivo
+Analisar a tendência da série temporal da balança comercial (saldo mensal) e gerar previsões para os próximos 12 meses.
 
-**Ferramentas:**  
-- Python  
-- Bibliotecas: `pandas`, `matplotlib`, `statsmodels`, `scipy`
+### Resultados principais
 
-**Etapas realizadas:**
-- Leitura e processamento da série temporal (`data`, `valor`)
-- Cálculo da tendência por regressão linear (classificação: crescente/decrescente/estável)
-- Aplicação dos modelos ARIMA(1,1,1) e SARIMA(1,1,1)x(1,1,1,12)
-- Previsão dos próximos 12 meses
-- Exibição dos gráficos e impressão dos resultados completos no terminal
+- Tendência: CRESCENTE  
+- Inclinação: 56.7474  
+- R²: 0.7676  
 
-**Resultados gerados:**
-- Tendência geral: **Crescente**, inclinação: 56.7474, R²: 0.7676
-- **Resumo ARIMA:** Log-Likelihood: -3161.857, AIC: 6329.714
-- **Resumo SARIMA:** Log-Likelihood: -3037.424, AIC: 6084.848
-- Gráficos:  
-  1. Série temporal com linha de tendência  
-  2. Previsão ARIMA vs SARIMA (12 meses)
+**Modelos e Previsões:**
+
+| Modelo | AIC     | Descrição                  |
+|--------|---------|----------------------------|
+| ARIMA  | 6329.714| Modelo básico sem sazonalidade |
+| SARIMA | 6084.848| Modelo com sazonalidade anual |
+
+Previsões SARIMA para 12 meses: variam entre 22.900 e 25.000 (em US$ milhões).
 
 ---
 
-## 2) Mineração de Texto com Três Técnicas (4,0 pts)
+## ✅ Questão 2 – Mineração de Texto
 
-**Textos utilizados:**
-```text
-"O Brasil é o maior exportador de soja."
-"A inflação no país tem subido nos últimos meses."
-"O desemprego caiu, mas ainda preocupa."
+### Objetivo
+Analisar textos reais extraídos do web scraping para identificar palavras frequentes, importância relativa e tópicos.
+
+### Textos utilizados
+Extraídos do arquivo CSV gerado pelo web scraping (títulos das notícias).
+
+### Resultados
+
+**Top 10 Palavras por Contagem:**
+
+| Palavra   | Frequência |
+|-----------|------------|
+| to        | 18         |
+| and       | 17         |
+| in        | 15         |
+| for       | 9          |
+| attacks   | 6          |
+| malware   | 6          |
+| microsoft | 6          |
+| new       | 6          |
+| ai        | 5          |
+| critical  | 5          |
+
+**Top 10 Palavras por TF-IDF Médio:**
+
+| Palavra   | TF-IDF Médio |
+|-----------|--------------|
+| to        | 0.0549       |
+| and       | 0.0535       |
+| in        | 0.0495       |
+| for       | 0.0365       |
+| malware   | 0.0284       |
+| attacks   | 0.0274       |
+| microsoft | 0.0269       |
+| new       | 0.0260       |
+| the       | 0.0250       |
+| ai        | 0.0244       |
+
+**Tópicos (LDA):**
+
+- Tópico 1: to, and, in  
+- Tópico 2: in, and, to  
+
+---
+
+## ✅ Questão 3 – Web Scraping
+
+### Objetivo
+Extrair notícias recentes para enriquecer a análise textual.
+
+### Fonte utilizada
+- [The Hacker News RSS](https://feeds.feedburner.com/TheHackersNews)
+
+### Dados extraídos
+Título, link e resumo das últimas notícias foram coletados e salvos em:
+
+`result-web-scraping/noticias_hackernews_rss.csv`
+
+---
+
+## 🚀 Como executar o projeto
+
+1. Instale as dependências usando o arquivo `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
 ```
 
-**Técnicas aplicadas:**
-- **Bag-of-Words (CountVectorizer)**  
-- **TF-IDF (TfidfVectorizer)**  
-- **LDA (Latent Dirichlet Allocation)**
+2. Execute o programa principal:
 
-**Ferramentas:**  
-`sklearn`, `pandas`
 
-**Resultados:**  
-Os resultados de contagem de palavras, TF-IDF e tópicos LDA foram impressos no console. Cada técnica revelou diferentes insights sobre a relevância e estrutura semântica dos textos.
-
----
-
-## 3) Web Scraping com RSS (3,0 pts)
-
-**Fonte de dados:**  
-[The Hacker News - RSS Feed](https://feeds.feedburner.com/TheHackersNews)
-
-**Método:**  
-- Leitura do feed RSS com `feedparser`
-- Extração dos campos: **Título**, **Link**, **Resumo**
-- Armazenamento dos dados no arquivo `result-web-scraping/noticias_hackernews_rss.csv`
-
-**Exemplo de dados extraídos:**
-```json
-{
-  "Título": "North Korean Hackers Target Web3 with Nim Malware and Use ClickFix in BabyShark Campaign",
-  "Link": "https://thehackernews.com/2025/07/north-korean-hackers-target-web3-with.html",
-  "Resumo": "Threat actors with ties to North Korea have been observed targeting Web3..."
-}
+```bash
+python main.py
 ```
-
-```json
-{
-  "Título": "That Network Traffic Looks Legit, But it Could be Hiding a Serious Threat",
-  "Link": "https://thehackernews.com/2025/07/that-network-traffic-looks-legit-but-it.html",
-  "Resumo": "With nearly 80% of cyber threats now mimicking legitimate user behavior..."
-}
-```
-
-**Resultado:**  
-O CSV foi salvo com todas as notícias disponíveis, cada uma contendo os três campos descritos.
-
----
-
-## Conclusão
-
-Todos os itens da avaliação foram implementados conforme solicitado, com demonstração clara de aplicação dos modelos ARIMA/SARIMA, uso prático de técnicas de mineração de texto e Web Scraping com RSS. O projeto está estruturado para apresentação com saída visual (gráficos) e textual (console + CSV).

@@ -6,3 +6,4 @@ statsmodels
 scikit-learn
 beautifulsoup4
 requests
+tabulate
