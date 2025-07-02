@@ -17,6 +17,7 @@ else:
             link = entry.link
             resumo = entry.summary if 'summary' in entry else ""
             writer.writerow([titulo, link, resumo])
+            print(f"Título: {titulo}\nLink: {link}\nResumo: {resumo}\n{'-'*40}")
 
     print(f"Total de notícias salvas: {len(feed.entries)}")
     print("Notícias salvas em result-web-scraping/noticias_hackernews_rss.csv")
